@@ -41,6 +41,7 @@ with open("mxm_dataset_train.txt", "r") as dataset:
 			continue
 		f = tokens[0]
 		genre_indices = d[f].split(' ')
+		
 		for i in range(len(genre_indices)):
 			genre_idx = int(genre_indices[i])
 			if genre_idx == 3 or genre_idx == 6 or genre_idx == 11:
@@ -53,8 +54,7 @@ with open("mxm_dataset_train.txt", "r") as dataset:
 			haha = [0] * 5001
 			m[cnt] = haha
 			name[cnt] = tokens[0]
-			filename = tokens[0]
-			m[cnt][0] = d[filename]
+			m[cnt][0] = genre_idx
 			for token in tokens:
 				keyval = token.split(':')
 				if len(keyval) < 2:
