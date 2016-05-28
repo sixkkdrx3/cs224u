@@ -1,13 +1,13 @@
 import numpy as np
 from sklearn import cluster
+import sys
 
 if __name__ == "__main__":
-    parent_dir = "../data/"
-    train_filename = parent_dir + "train_large.csv"
+    train_filename = sys.argv[1]
     f_train = open(train_filename, 'r')
 
     cnt = 0
-    X = np.zeros(shape=(40000, 5000))
+    X = np.zeros(shape=(10010, 5000))
     for line in f_train:
         args = line.split(',')
         row = np.array(args[1:])
@@ -18,11 +18,9 @@ if __name__ == "__main__":
 
     print np.shape(X)
 
-    k_means = cluster.KMeans(n_clusters=13, n_init=4)
+    k_means = cluster.KMeans(n_clusters=10, n_init=4)
 
     clusters = k_means.fit_predict(X)
     out_f = open("kmeans_result", 'w')
     for c in clusters:
         out_f.write("%d\n" % c)
-
-

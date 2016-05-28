@@ -1,8 +1,7 @@
 import numpy as np
+import sys
 
 if __name__ == "__main__":
-    clusters = np.load("clusters_result.npy")
-
     f_clusters = open("kmeans_result", 'r')
     clusters = dict()
     for i in range(13):
@@ -13,7 +12,8 @@ if __name__ == "__main__":
         clusters[int(line)].append(cnt)
         cnt = cnt + 1
 
-    f_data = open("../data/train_large.csv", 'r')
+    filename = sys.argv[1]
+    f_data = open(filename, 'r')
     actual_clusters = []
     actual_bins = [0 for _ in range(13)]
     for line in f_data:
