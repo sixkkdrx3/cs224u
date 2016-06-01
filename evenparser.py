@@ -54,7 +54,14 @@ with open("mxm_dataset_train.txt", "r") as dataset:
 			haha = [0] * 5001
 			m[cnt] = haha
 			name[cnt] = tokens[0]
-			m[cnt][0] = genre_idx
+  			if genre_idx == 0 or genre_idx == 1 or genre_idx == 2:
+				m[cnt][0] = 0
+			elif genre_idx == 4 or genre_idx == 10 or genre_idx == 9:
+				m[cnt][0] = 1
+			elif genre_idx == 12:
+				continue
+			else:
+				m[cnt][0] = 2
 			for token in tokens:
 				keyval = token.split(':')
 				if len(keyval) < 2:
@@ -68,10 +75,12 @@ with open("mxm_dataset_train.txt", "r") as dataset:
 			cnt += 1
 			if cnt % 1000 == 0:
 				print cnt
-	f = open('uniform_data.csv', 'wb')
+	f = open('merged_data.csv', 'wb')
 	f2 = open('name_mapping.txt','wb')
 	writer = csv.writer(f)
+        cnt =0 
 	for key,value in m.items():
+		key = int(key)
 		f2.write(str(key) + ',' + name[key] + '\n')
 		writer.writerow([val for val in value])
 		
