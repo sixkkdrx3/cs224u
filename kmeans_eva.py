@@ -2,9 +2,11 @@ import numpy as np
 import sys
 
 if __name__ == "__main__":
-    f_clusters = open("kmeans_result", 'r')
+    N = 10
+    result_file = sys.argv[1]
+    f_clusters = open(result_file, 'r')
     clusters = dict()
-    for i in range(13):
+    for i in range(N):
         clusters[i] = []
 
     cnt = 0
@@ -12,26 +14,26 @@ if __name__ == "__main__":
         clusters[int(line)].append(cnt)
         cnt = cnt + 1
 
-    filename = sys.argv[1]
+    filename = sys.argv[2]
     f_data = open(filename, 'r')
     actual_clusters = []
-    actual_bins = [0 for _ in range(13)]
+    actual_bins = [0 for _ in range(N)]
     for line in f_data:
         line = line.split(',')
         actual_clusters.append(int(line[0]))
         actual_bins[int(line[0])] = actual_bins[int(line[0])] + 1
 
-    for i in range(13):
+    for i in range(N):
         print actual_bins[i],
     print
     print '=' * 79
 
 
     total_cnt = 0
-    for i in range(13):
+    for i in range(N):
         cluster = clusters[i]
         #print cluster
-        bins = [0 for _ in range(13)]
+        bins = [0 for _ in range(N)]
         for c in cluster:
             bins[actual_clusters[c]] = bins[actual_clusters[c]] + 1
 
@@ -42,8 +44,8 @@ if __name__ == "__main__":
     print total_cnt / (cnt * 1.0)
 
     print '=' * 79
-    C = range(13)
-    S = range(13)
+    C = range(N)
+    S = range(N)
     greedy_assignment = dict()
     while len(C) > 0:
         best_cnt = -1
@@ -74,10 +76,10 @@ if __name__ == "__main__":
 
     print greedy_assignment
     total_cnt = 0
-    for i in range(13):
+    for i in range(N):
         cluster = clusters[i]
         for c in cluster:
             if actual_clusters[c] == greedy_assignment[i]:
                 total_cnt = total_cnt + 1
 
-    print total_cnt / (40000.0)
+    print total_cnt / (10010.0)
